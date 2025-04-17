@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bv41e3qmolx5j"]
+[gd_scene load_steps=7 format=3 uid="uid://bv41e3qmolx5j"]
 
 [ext_resource type="PackedScene" uid="uid://ctulm0jfo38it" path="res://src/levels/playground.tscn" id="1_gh0ne"]
 [ext_resource type="PackedScene" uid="uid://21q8x3v7248b" path="res://src/characters/rabbit/rabbit.tscn" id="2_5q4o7"]
+[ext_resource type="Script" uid="uid://dqg0id670xg3g" path="res://src/camera_3d.gd" id="3_5q4o7"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_3cfgd"]
 sky_top_color = Color(0.553539, 0.2885, 0.802123, 1)
@@ -20,7 +21,13 @@ sky = SubResource("Sky_fyndt")
 [node name="Main" type="Node3D"]
 
 [node name="Player1" parent="." instance=ExtResource("2_5q4o7")]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.1823, 0.955476, -2.73712)
+
+[node name="Player2" parent="." instance=ExtResource("2_5q4o7")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.832, 0.955476, -2.73712)
+player = 1
 
 [node name="Playground" parent="." instance=ExtResource("1_gh0ne")]
 
@@ -38,7 +45,4 @@ environment = SubResource("Environment_kmhfv")
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-1, -7.57103e-08, 4.37114e-08, 0, 0.5, 0.866025, -8.74228e-08, 0.866025, -0.5, 0, 15, -10)
 current = true
-
-[node name="Player2" parent="." instance=ExtResource("2_5q4o7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.832, 0.955476, -2.73712)
-player = 1
+script = ExtResource("3_5q4o7")
