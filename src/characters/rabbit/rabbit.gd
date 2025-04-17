@@ -8,21 +8,12 @@ extends RigidBody3D
 @export var ground_ray_length: float = 1.2
 
 @export var rotation_speed: float = 12.0
-@export var stopping_speed: float = 1.0
-
-@export_group("Camera")
-@export_range(0.0, 1.0) var mouse_sensitivity: float = 0.25
-@export var tilt_upper_limit: float = PI / 3.0
-@export var tilt_lower_limit: float = -PI / 8.0
 
 var is_grounded: bool = false
 var move_direction: Vector3 = Vector3.ZERO
 var _was_on_floor_last_frame: bool = true
-var _camera_input_direction: Vector2 = Vector2.ZERO
 
 @onready var _last_input_direction: Vector3 = global_basis.z
-@onready var _camera_pivot: Node3D = %CameraPivot
-@onready var _camera: Camera3D = %Camera3D
 @onready var _skin: Node3D = %RabbitSkin
 @onready var ground_check: RayCast3D = %RayCast3D
 #@onready var _landing_sound: AudioStreamPlayer3D = %LandingSound
@@ -35,43 +26,16 @@ func _ready() -> void:
 	lock_rotation = true
 
 
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_cancel"):
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	elif event.is_action_pressed("left_click"):
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-
-
-func _unhandled_input(event: InputEvent) -> void:
-	var player_is_using_mouse: bool = (
-		event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED
-	)
-	if player_is_using_mouse:
-		_camera_input_direction.x = -(event as InputEventMouseMotion).relative.x * mouse_sensitivity
-		_camera_input_direction.y = -(event as InputEventMouseMotion).relative.y * mouse_sensitivity
-
-
 func _physics_process(delta: float) -> void:
 	is_grounded = ground_check.is_colliding()
 
-	_camera_pivot.rotation.x += _camera_input_direction.y * delta
-	_camera_pivot.rotation.x = clamp(_camera_pivot.rotation.x, tilt_lower_limit, tilt_upper_limit)
-	_camera_pivot.rotation.y += _camera_input_direction.x * delta
-
-	_camera_input_direction = Vector2.ZERO
-
 	# Calculate movement input and align it to the camera's direction.
 	var raw_input: Vector2 = Input.get_vector(
-		"move_left", "move_right", "move_up", "move_down", 0.4
+		"move_right", "move_left", "move_down", "move_up", 0.4
 	)
 
 	# Should be projected onto the ground plane.
-	var forward: Vector3 = _camera.global_basis.z
-	var right: Vector3 = _camera.global_basis.x
-
-	move_direction = forward * raw_input.y + right * raw_input.x
-	move_direction.y = 0.0
-	move_direction = move_direction.normalized()
+	move_direction = transform.basis * Vector3(raw_input.x, 0, raw_input.y).normalized()
 
 	# To not orient the character too abruptly, we filter movement inputs we
 	# consider when turning the skin. This also ensures we have a normalized
