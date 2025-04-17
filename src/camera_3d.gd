@@ -8,7 +8,7 @@ extends Camera3D
 @export_enum("Overhead", "Angled") var camera_style: int = 0
 @export var min_distance: float = 8.0  # Minimum camera distance/size
 @export var max_distance: float = 30.0  # Maximum camera distance/size
-@export var distance_margin: float = 1.0  # Extra margin to add to required distance
+@export var distance_margin: float = 2.0  # Extra margin to add to required distance
 @export var smoothing: float = 5.0  # How smoothly the camera moves
 @export var angle_degrees: float = 60.0
 

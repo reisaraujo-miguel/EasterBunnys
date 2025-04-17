@@ -33,11 +33,7 @@ player = 1
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.64011, 0.768283, 0, -0.768283, 0.64011, 0, 0, 0)
-light_bake_mode = 0
 shadow_enabled = true
-directional_shadow_mode = 0
-directional_shadow_max_distance = 50.0
-directional_shadow_pancake_size = 0.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_kmhfv")
