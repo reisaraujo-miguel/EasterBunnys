@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://21q8x3v7248b"]
+
+[ext_resource type="Script" uid="uid://bfaxta5pr33iy" path="res://src/characters/rabbit/rabbit.gd" id="1_7fv7y"]
+[ext_resource type="PackedScene" uid="uid://yty14g3nshfv" path="res://src/characters/rabbit/rabbit_skin.tscn" id="2_f38wu"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_f38wu"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_f38wu"]
+height = 1.0
+radius = 0.2
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_f38wu"]
+
+[node name="Rabbit" type="RigidBody3D"]
+mass = 3.0
+physics_material_override = SubResource("PhysicsMaterial_f38wu")
+linear_damp = 2.0
+script = ExtResource("1_7fv7y")
+
+[node name="RabbitSkin" parent="." instance=ExtResource("2_f38wu")]
+unique_name_in_owner = true
+transform = Transform3D(0.14, 0, 0, 0, 0.14, 0, 0, 0, 0.14, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.454315, 0)
+shape = SubResource("CylinderShape3D_f38wu")
+
+[node name="CameraPivot" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.854459, -0.519519, 0, 0.519519, 0.854459, 0, 0.780067, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+shape = SubResource("SphereShape3D_f38wu")
+spring_length = 8.0
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D"]
+unique_name_in_owner = true
+keep_aspect = 0
+current = true
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+unique_name_in_owner = true

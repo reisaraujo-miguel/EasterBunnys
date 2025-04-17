@@ -1,0 +1,42 @@
+[gd_scene load_steps=8 format=3 uid="uid://ctulm0jfo38it"]
+
+[ext_resource type="Material" uid="uid://dhfo6f7kw08ce" path="res://src/shaders/cel_shade_material.tres" id="1_mjnq3"]
+[ext_resource type="PackedScene" uid="uid://b10nypm44tn8q" path="res://src/collectables/carrot/carrot.tscn" id="2_4wxqt"]
+[ext_resource type="PackedScene" uid="uid://cqbdja1tw30if" path="res://src/objects/egg/egg.tscn" id="3_lckjp"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_w21xv"]
+size = Vector3(100, 1, 100)
+
+[sub_resource type="BoxMesh" id="BoxMesh_mjnq3"]
+size = Vector3(100, 1, 100)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_lckjp"]
+size = Vector2(200, 200)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mjnq3"]
+next_pass = ExtResource("1_mjnq3")
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture = SubResource("PlaceholderTexture2D_lckjp")
+roughness = 0.0
+
+[node name="Playground" type="Node3D"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_w21xv")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D/CollisionShape3D"]
+mesh = SubResource("BoxMesh_mjnq3")
+surface_material_override/0 = SubResource("StandardMaterial3D_mjnq3")
+
+[node name="carrot" parent="." instance=ExtResource("2_4wxqt")]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 1.59926, 3.21987)
+
+[node name="Egg" parent="." instance=ExtResource("3_lckjp")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 8.62821, -16.3133)
+visible = false

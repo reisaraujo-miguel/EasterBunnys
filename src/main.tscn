@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://bv41e3qmolx5j"]
+
+[ext_resource type="PackedScene" uid="uid://ctulm0jfo38it" path="res://src/levels/playground.tscn" id="1_gh0ne"]
+[ext_resource type="PackedScene" uid="uid://21q8x3v7248b" path="res://src/characters/rabbit/rabbit.tscn" id="2_5q4o7"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_3cfgd"]
+sky_top_color = Color(0.553539, 0.2885, 0.802123, 1)
+sky_horizon_color = Color(0.967626, 0.394763, 0.868042, 1)
+sky_cover_modulate = Color(0.753438, 0.338945, 1, 1)
+ground_bottom_color = Color(0.182457, 0.127203, 0.341797, 1)
+ground_horizon_color = Color(1, 0.449032, 0.546672, 1)
+
+[sub_resource type="Sky" id="Sky_fyndt"]
+sky_material = SubResource("ProceduralSkyMaterial_3cfgd")
+
+[sub_resource type="Environment" id="Environment_kmhfv"]
+background_mode = 2
+sky = SubResource("Sky_fyndt")
+
+[node name="Main" type="Node3D"]
+
+[node name="Rabbit" parent="." instance=ExtResource("2_5q4o7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.955476, -2.73712)
+
+[node name="Playground" parent="." instance=ExtResource("1_gh0ne")]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.64011, 0.768283, 0, -0.768283, 0.64011, 0, 0, 0)
+light_bake_mode = 0
+shadow_enabled = true
+directional_shadow_mode = 0
+directional_shadow_max_distance = 50.0
+directional_shadow_pancake_size = 0.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_kmhfv")

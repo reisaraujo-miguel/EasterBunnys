@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://b10nypm44tn8q"]
+
+[ext_resource type="PackedScene" uid="uid://cvu2ir0h2ps3b" path="res://assets/rabbit/carrot.glb" id="1_v384o"]
+[ext_resource type="Texture2D" uid="uid://33lhkfecknbw" path="res://assets/rabbit/carrot_texture.png" id="2_6h1s4"]
+[ext_resource type="Material" uid="uid://dhfo6f7kw08ce" path="res://src/shaders/cel_shade_material.tres" id="3_6xuo0"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nxn8j"]
+next_pass = ExtResource("3_6xuo0")
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture = ExtResource("2_6h1s4")
+roughness = 0.0
+
+[node name="carrot" instance=ExtResource("1_v384o")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+
+[node name="Cylinder" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_nxn8j")
