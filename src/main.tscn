@@ -19,8 +19,8 @@ sky = SubResource("Sky_fyndt")
 
 [node name="Main" type="Node3D"]
 
-[node name="Rabbit" parent="." instance=ExtResource("2_5q4o7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.955476, -2.73712)
+[node name="Player1" parent="." instance=ExtResource("2_5q4o7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.1823, 0.955476, -2.73712)
 
 [node name="Playground" parent="." instance=ExtResource("1_gh0ne")]
 
@@ -36,5 +36,9 @@ directional_shadow_pancake_size = 0.0
 environment = SubResource("Environment_kmhfv")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-1, 6.18172e-08, -6.18172e-08, 0, 0.707107, 0.707107, 8.74228e-08, 0.707107, -0.707107, 0, 15, -10)
+transform = Transform3D(-1, -7.57103e-08, 4.37114e-08, 0, 0.5, 0.866025, -8.74228e-08, 0.866025, -0.5, 0, 15, -10)
 current = true
+
+[node name="Player2" parent="." instance=ExtResource("2_5q4o7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.832, 0.955476, -2.73712)
+player = 1

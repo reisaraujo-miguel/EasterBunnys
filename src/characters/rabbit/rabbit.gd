@@ -1,12 +1,12 @@
 extends RigidBody3D
 
+@export_group("Player Selection")
+@export_enum("Player 1", "Player 2") var player: int = 0
+
 @export_group("Movement")
-@export var move_speed: float = 50.0
+@export var move_speed: float = 60.0
 @export var jump_force: float = 10.0
 @export var air_control: float = 0.3
-
-@export var ground_ray_length: float = 1.2
-
 @export var rotation_speed: float = 12.0
 
 var is_grounded: bool = false
@@ -25,21 +25,29 @@ func _ready() -> void:
 	# Lock rotation to prevent character from tipping over
 	lock_rotation = true
 
+	if player == 0:
+		_skin.rotation.y = deg_to_rad(-90)
+		_last_input_direction = -global_basis.x
+	elif player == 1:
+		_skin.rotation.y = deg_to_rad(90)
+		_last_input_direction = global_basis.x
+
 
 func _physics_process(delta: float) -> void:
 	is_grounded = ground_check.is_colliding()
 
-	# Calculate movement input and align it to the camera's direction.
-	var raw_input: Vector2 = Input.get_vector(
-		"move_right", "move_left", "move_down", "move_up", 0.4
-	)
+	var raw_input: Vector2
+	if player == 0:
+		raw_input = Input.get_vector(
+			"player1_right", "player1_left", "player1_down", "player1_up", 0.4
+		).normalized()
+	else:
+		raw_input = Input.get_vector(
+		"player2_right", "player2_left", "player2_down", "player2_up", 0.4
+	).normalized()
 
-	# Should be projected onto the ground plane.
 	move_direction = transform.basis * Vector3(raw_input.x, 0, raw_input.y).normalized()
 
-	# To not orient the character too abruptly, we filter movement inputs we
-	# consider when turning the skin. This also ensures we have a normalized
-	# direction for the rotation basis.
 	if move_direction.length() > 0.2:
 		_last_input_direction = move_direction
 
@@ -55,6 +63,7 @@ func _physics_process(delta: float) -> void:
 	# Character animations and visual effects.
 	var ground_speed: float = Vector2(velocity.x, velocity.z).length()
 	var is_just_jumping: bool = Input.is_action_just_pressed("jump")
+
 	if is_just_jumping:
 		apply_central_impulse(Vector3.UP * jump_force)
 		#_skin.jump()

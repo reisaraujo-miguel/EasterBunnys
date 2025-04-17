@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://b10nypm44tn8q"]
+[gd_scene load_steps=8 format=3 uid="uid://b10nypm44tn8q"]
 
 [ext_resource type="PackedScene" uid="uid://cvu2ir0h2ps3b" path="res://assets/rabbit/carrot.glb" id="1_v384o"]
 [ext_resource type="Texture2D" uid="uid://33lhkfecknbw" path="res://assets/rabbit/carrot_texture.png" id="2_6h1s4"]
@@ -11,8 +11,53 @@ specular_mode = 1
 albedo_texture = ExtResource("2_6h1s4")
 roughness = 0.0
 
+[sub_resource type="Animation" id="Animation_v384o"]
+resource_name = "spinning"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Cylinder:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.261799, 0, 0), Vector3(0.261799, 1.5708, 0), Vector3(0.261799, 3.14159, 0), Vector3(0.261799, 4.71239, 0), Vector3(0.261799, 6.26573, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_6h1s4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Cylinder:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.261799, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6xuo0"]
+_data = {
+&"RESET": SubResource("Animation_6h1s4"),
+&"spinning": SubResource("Animation_v384o")
+}
+
 [node name="carrot" instance=ExtResource("1_v384o")]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 
 [node name="Cylinder" parent="." index="0"]
+transform = Transform3D(0.743847, 0, 0, 0, 0.718501, -0.192522, 0, 0.192522, 0.718501, 0, 0, 0)
 surface_material_override/0 = SubResource("StandardMaterial3D_nxn8j")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
+libraries = {
+&"": SubResource("AnimationLibrary_6xuo0")
+}
+autoplay = "spinning"
+speed_scale = 0.6

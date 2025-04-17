@@ -1,0 +1,19 @@
+[gd_scene load_steps=6 format=3 uid="uid://ww6u4lmrp21l"]
+
+[ext_resource type="PackedScene" uid="uid://bgri3chmeiyfa" path="res://assets/egg/egg.glb" id="1_wmlqn"]
+[ext_resource type="Script" uid="uid://cwamveklj76ak" path="res://src/objects/egg/egg_skin.gd" id="2_1q3v3"]
+[ext_resource type="Material" uid="uid://dhfo6f7kw08ce" path="res://src/shaders/cel_shade_material.tres" id="2_iema7"]
+[ext_resource type="Texture2D" uid="uid://dbnjk5vqnjn3u" path="res://assets/egg/egg_texture_2.png" id="2_kblg8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kblg8"]
+next_pass = ExtResource("2_iema7")
+albedo_texture = ExtResource("2_kblg8")
+
+[node name="egg" instance=ExtResource("1_wmlqn")]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("2_1q3v3")
+
+[node name="Sphere" parent="." index="0"]
+unique_name_in_owner = true
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0, 0)
+surface_material_override/0 = SubResource("StandardMaterial3D_kblg8")
