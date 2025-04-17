@@ -4,8 +4,8 @@ extends RigidBody3D
 @export_enum("Player 1", "Player 2") var player: int = 0
 
 @export_group("Movement")
-@export var move_speed: float = 60.0
-@export var jump_force: float = 10.0
+@export var move_speed: float = 25.0
+@export var jump_force: float = 20.0
 @export var air_control: float = 0.3
 @export var rotation_speed: float = 12.0
 
@@ -19,7 +19,8 @@ var _was_on_floor_last_frame: bool = true
 #@onready var _landing_sound: AudioStreamPlayer3D = %LandingSound
 #@onready var _jump_sound: AudioStreamPlayer3D = %JumpSound
 #@onready var _dust_particles: GPUParticles3D = %DustParticles
-
+@onready var anim: AnimationTree = %AnimationTree
+@onready var anim_state_machine: AnimationNodeStateMachinePlayback = anim.get("parameters/StateMachine/playback")
 
 func _ready() -> void:
 	# Lock rotation to prevent character from tipping over
@@ -38,13 +39,17 @@ func _physics_process(delta: float) -> void:
 
 	var raw_input: Vector2
 	if player == 0:
-		raw_input = Input.get_vector(
-			"player1_right", "player1_left", "player1_down", "player1_up", 0.4
-		).normalized()
+		raw_input = (
+			Input
+			. get_vector("player1_right", "player1_left", "player1_down", "player1_up", 0.4)
+			. normalized()
+		)
 	else:
-		raw_input = Input.get_vector(
-		"player2_right", "player2_left", "player2_down", "player2_up", 0.4
-	).normalized()
+		raw_input = (
+			Input
+			. get_vector("player2_right", "player2_left", "player2_down", "player2_up", 0.4)
+			. normalized()
+		)
 
 	move_direction = transform.basis * Vector3(raw_input.x, 0, raw_input.y).normalized()
 
@@ -62,9 +67,15 @@ func _physics_process(delta: float) -> void:
 
 	# Character animations and visual effects.
 	var ground_speed: float = Vector2(velocity.x, velocity.z).length()
-	var is_just_jumping: bool = Input.is_action_just_pressed("jump")
 
-	if is_just_jumping:
+	var is_just_jumping: bool
+
+	if player == 0:
+		is_just_jumping = Input.is_action_just_pressed("player1_jump")
+	else:
+		is_just_jumping = Input.is_action_just_pressed("player2_jump")
+
+	if is_grounded and is_just_jumping:
 		apply_central_impulse(Vector3.UP * jump_force)
 		#_skin.jump()
 		#_jump_sound.play()
@@ -74,10 +85,10 @@ func _physics_process(delta: float) -> void:
 		pass
 	elif is_grounded:
 		if ground_speed > 0.0:
-			#_skin.move()
+			anim_state_machine.travel("running")
 			pass
 		else:
-			#_skin.idle()
+			anim_state_machine.travel("idle")
 			pass
 
 	#_dust_particles.emitting = is_on_floor() && ground_speed > 0.0
