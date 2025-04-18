@@ -21,6 +21,7 @@ var _was_on_floor_last_frame: bool = true
 #@onready var _dust_particles: GPUParticles3D = %DustParticles
 @onready var anim: AnimationTree = %AnimationTree
 @onready var anim_state_machine: AnimationNodeStateMachinePlayback = anim.get("parameters/StateMachine/playback")
+@onready var player_indicator: MeshInstance3D = %PlayerIndicator
 
 func _ready() -> void:
 	# Lock rotation to prevent character from tipping over
@@ -29,9 +30,11 @@ func _ready() -> void:
 	if player == 0:
 		_skin.rotation.y = deg_to_rad(-90)
 		_last_input_direction = -global_basis.x
+		(player_indicator.get_surface_override_material(0) as StandardMaterial3D).albedo_color = Color("#004cff")
 	elif player == 1:
 		_skin.rotation.y = deg_to_rad(90)
 		_last_input_direction = global_basis.x
+		(player_indicator.get_surface_override_material(0) as StandardMaterial3D).albedo_color = Color("#ff2600")
 
 
 func _physics_process(delta: float) -> void:

@@ -1,5 +1,10 @@
 extends Node3D
 
+@export_enum("texture 1", "texture 2", "texture 3") var texture_idx: int = 0:
+	set(value):
+		texture_idx = value
+		set_texture(texture_idx)
+
 @onready var _skin: MeshInstance3D = %Sphere
 
 @onready var _texture_1: Texture2D = preload("uid://cnt573igd4nsm") as Texture2D
@@ -8,15 +13,13 @@ extends Node3D
 
 
 func _ready() -> void:
-	var texture_idx: int = randi_range(0, 2)
-
-	set_texture(texture_idx)
+	texture_idx = randi_range(0, 2)
 
 
-func set_texture(texture_idx: int) -> void:
+func set_texture(idx: int) -> void:
 	var texture: Texture2D
 
-	match texture_idx:
+	match idx:
 		0:
 			texture = _texture_1
 		1:
