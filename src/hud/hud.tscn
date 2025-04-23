@@ -1,0 +1,77 @@
+[gd_scene load_steps=5 format=3 uid="uid://emaemb0aiy7h"]
+
+[ext_resource type="Texture2D" uid="uid://c2lgm28jaxn3w" path="res://assets/egg/egg_icon.svg" id="1_3phq6"]
+[ext_resource type="Script" uid="uid://du4ada6q1awep" path="res://src/hud/hud.gd" id="1_ony6l"]
+[ext_resource type="FontFile" uid="uid://1jotdx8idbbv" path="res://assets/fonts/open_sans.ttf" id="2_ony6l"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_8ej7y"]
+font = ExtResource("2_ony6l")
+font_size = 40
+shadow_size = 6
+shadow_color = Color(0, 0, 0, 0.458824)
+shadow_offset = Vector2(-1, 2)
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ony6l")
+
+[node name="Player1Score" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 20
+
+[node name="HSplitContainer" type="HSplitContainer" parent="Player1Score"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="TextureRect" type="TextureRect" parent="Player1Score/HSplitContainer"]
+modulate = Color(0, 0, 1, 1)
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_3phq6")
+expand_mode = 3
+
+[node name="P1ScoreLabel" type="Label" parent="Player1Score/HSplitContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
+label_settings = SubResource("LabelSettings_8ej7y")
+
+[node name="Player2Score" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -111.0
+offset_bottom = 80.0
+grow_horizontal = 0
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 40
+
+[node name="HSplitContainer" type="HSplitContainer" parent="Player2Score"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="P2ScoreLabel" type="Label" parent="Player2Score/HSplitContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
+label_settings = SubResource("LabelSettings_8ej7y")
+
+[node name="TextureRect" type="TextureRect" parent="Player2Score/HSplitContainer"]
+modulate = Color(1, 0, 0, 1)
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_3phq6")
+expand_mode = 3

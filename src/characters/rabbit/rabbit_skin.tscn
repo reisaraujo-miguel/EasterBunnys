@@ -1,12 +1,13 @@
 [gd_scene load_steps=4 format=3 uid="uid://yty14g3nshfv"]
 
 [ext_resource type="PackedScene" uid="uid://rkjo07kloulk" path="res://assets/rabbit/rabbit.glb" id="1_oduxm"]
-[ext_resource type="Material" uid="uid://dhfo6f7kw08ce" path="res://src/shaders/cel_shade_material.tres" id="2_6fkct"]
+[ext_resource type="Material" uid="uid://dhfo6f7kw08ce" path="res://src/shaders/cel_shading/cel_shade_material.tres" id="2_6fkct"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6fkct"]
 next_pass = ExtResource("2_6fkct")
 diffuse_mode = 3
 specular_mode = 1
+albedo_color = Color(0.8, 0.8, 0.8, 1)
 roughness = 0.0
 
 [node name="RabbitSkin" instance=ExtResource("1_oduxm")]

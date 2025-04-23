@@ -4,9 +4,9 @@ extends RigidBody3D
 @export_enum("Player 1", "Player 2") var player: int = 0
 
 @export_group("Movement")
-@export var move_speed: float = 25.0
+@export var move_speed: float = 30.0
 @export var jump_force: float = 20.0
-@export var air_control: float = 0.3
+@export var air_control: float = 0.8
 @export var rotation_speed: float = 12.0
 
 var is_grounded: bool = false
@@ -20,21 +20,21 @@ var _was_on_floor_last_frame: bool = true
 #@onready var _jump_sound: AudioStreamPlayer3D = %JumpSound
 #@onready var _dust_particles: GPUParticles3D = %DustParticles
 @onready var anim: AnimationTree = %AnimationTree
-@onready var anim_state_machine: AnimationNodeStateMachinePlayback = anim.get("parameters/StateMachine/playback")
-@onready var player_indicator: MeshInstance3D = %PlayerIndicator
+@onready var anim_state_machine: AnimationNodeStateMachinePlayback = anim.get(
+	"parameters/StateMachine/playback"
+)
+
 
 func _ready() -> void:
 	# Lock rotation to prevent character from tipping over
 	lock_rotation = true
 
 	if player == 0:
-		_skin.rotation.y = deg_to_rad(-90)
-		_last_input_direction = -global_basis.x
-		(player_indicator.get_surface_override_material(0) as StandardMaterial3D).albedo_color = Color("#004cff")
-	elif player == 1:
 		_skin.rotation.y = deg_to_rad(90)
 		_last_input_direction = global_basis.x
-		(player_indicator.get_surface_override_material(0) as StandardMaterial3D).albedo_color = Color("#ff2600")
+	elif player == 1:
+		_skin.rotation.y = deg_to_rad(-90)
+		_last_input_direction = -global_basis.x
 
 
 func _physics_process(delta: float) -> void:
@@ -44,13 +44,13 @@ func _physics_process(delta: float) -> void:
 	if player == 0:
 		raw_input = (
 			Input
-			. get_vector("player1_right", "player1_left", "player1_down", "player1_up", 0.4)
+			. get_vector("player1_left", "player1_right", "player1_up", "player1_down", 0.4)
 			. normalized()
 		)
 	else:
 		raw_input = (
 			Input
-			. get_vector("player2_right", "player2_left", "player2_down", "player2_up", 0.4)
+			. get_vector("player2_left", "player2_right", "player2_up", "player2_down", 0.4)
 			. normalized()
 		)
 

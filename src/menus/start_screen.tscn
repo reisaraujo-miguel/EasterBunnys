@@ -1,0 +1,60 @@
+[gd_scene load_steps=4 format=3 uid="uid://bn6yfrpsxl1j7"]
+
+[ext_resource type="FontFile" uid="uid://1jotdx8idbbv" path="res://assets/fonts/open_sans.ttf" id="1_3xp7p"]
+[ext_resource type="Script" uid="uid://xroa3tew04u5" path="res://src/menus/start_screen.gd" id="2_t8rsg"]
+
+[sub_resource type="Theme" id="Theme_t8rsg"]
+default_font = ExtResource("1_3xp7p")
+default_font_size = 24
+
+[node name="StartScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_t8rsg")
+script = ExtResource("2_t8rsg")
+
+[node name="Panel" type="Panel" parent="."]
+custom_minimum_size = Vector2(200, 250)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VSplitContainer" type="VSplitContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -23.0
+offset_top = -37.0
+offset_right = 23.0
+offset_bottom = 37.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Start" type="Button" parent="Panel/VSplitContainer"]
+custom_minimum_size = Vector2(80, 50)
+layout_mode = 2
+text = "Start"
+
+[node name="Exit" type="Button" parent="Panel/VSplitContainer"]
+custom_minimum_size = Vector2(80, 50)
+layout_mode = 2
+text = "Exit"
+
+[connection signal="pressed" from="Panel/VSplitContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="Panel/VSplitContainer/Exit" to="." method="_on_exit_pressed"]
